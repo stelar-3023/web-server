@@ -19,7 +19,7 @@ app.use(express.static(publicPath));
 
 app.get('', (req, res) => {
   res.render('index', {
-    title: 'Weather App',
+    title: 'Weather',
     name: 'Steve Larsen',
   });
 });
@@ -44,6 +44,22 @@ app.get('/weather', (req, res) => {
     location: 'Nashville',
     forecast: 'clear',
     temperature: '72',
+  });
+});
+
+app.get('/help/*', (req, res) => {
+  res.render('404', {
+    title: '404',
+    name: 'Steve Larsen',
+    errorMessage: 'Help article not found',
+  });
+});
+
+app.get('*', (req, res) => {
+  res.render('404', {
+    title: '404',
+    name: 'Steve Larsen',
+    errorMessage: 'Page not found',
   });
 });
 
