@@ -47,21 +47,24 @@ app.get('/weather', (req, res) => {
       error: 'You must provide an address',
     });
   }
-  geocode(req.query.address, (error, {latitude, longitude, location }) => {
-    if (error) {
-      return res.send({ error });
-    }
-    forecast(latitude, longitude, (error, forecastData) => {
+  geocode(
+    req.query.address,
+    (error, { latitude, longitude, location } = {}) => {
       if (error) {
         return res.send({ error });
       }
-      res.send({
-        forecast: forecastData,
-        location,
-        address: req.query.address,
+      forecast(latitude, longitude, (error, forecastData) => {
+        if (error) {
+          return res.send({ error });
+        }
+        res.send({
+          forecast: forecastData,
+          location,
+          address: req.query.address,
+        });
       });
-    });
-  })
+    }
+  );
   // console.log(req.query.address);
   // res.send({
   //   forecast: 'Overcast & 72 degrees',
